@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.tekcapsule</groupId>
-    <artifactId>course-domain</artifactId>
-    <version>1.0.1</version>
-    <name>Course Domain</name>
-    <description>Course Domain</description>
+    <artifactId>insight-domain</artifactId>
+    <version>1.0.0</version>
+    <name>Insight Domain</name>
+    <description>Insight Domain</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -61,9 +61,9 @@
     </dependencyManagement>
     <distributionManagement>
         <repository>
-            <id>course</id>
+            <id>insight</id>
             <name>GitHub TekCapsule Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/tekcapsule/course-service</url>
+            <url>https://maven.pkg.github.com/tekcapsule/insight-service</url>
         </repository>
     </distributionManagement>
 </project>

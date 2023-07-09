@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.tekcapsule</groupId>
-    <artifactId>course-service</artifactId>
-    <version>1.0.1</version>
-    <name>Course Service</name>
-    <description>Course Service</description>
+    <artifactId>insight-service</artifactId>
+    <version>1.0.o</version>
+    <name>Insight Service</name>
+    <description>Insight Service</description>
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,8 +53,8 @@
         </dependency>
         <dependency>
             <groupId>com.tekcapsule</groupId>
-            <artifactId>course-domain</artifactId>
-            <version>1.0.1</version>
+            <artifactId>insight-domain</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -115,9 +115,9 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>course</id>
+            <id>insight</id>
             <name>GitHub TekCapsule Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/tekcapsule/course-service</url>
+            <url>https://maven.pkg.github.com/tekcapsule/insight-service</url>
         </repository>
     </distributionManagement>
 </project>
