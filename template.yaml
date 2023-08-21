@@ -50,7 +50,7 @@ Resources:
 
   # Setup DynamoDB Table
 
-  InsightsTable:
+  InsightTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: !Sub "${Stage}Insight"
