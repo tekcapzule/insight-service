@@ -53,44 +53,18 @@ Resources:
   InsightsTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: !Sub "${Stage}Insights"
+      TableName: !Sub "${Stage}Insight"
       AttributeDefinitions:
-        - AttributeName: insightsId
+        - AttributeName: insightId
           AttributeType: S
-        - AttributeName: region
-          AttributeType: S
-        - AttributeName: type
+        - AttributeName: closingOn
           AttributeType: S
       KeySchema:
-        - AttributeName: insightsId
+        - AttributeName: insightId
           KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
-      GlobalSecondaryIndexes:
-        - IndexName: newsGSI
-          KeySchema:
-            - AttributeName: type
-              KeyType: HASH
-            - AttributeName: title
-              KeyType: RANGE
-          Projection:
-            ProjectionType: ALL
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
-
-        - IndexName: stocksGSI
-          KeySchema:
-            - AttributeName: region
-              KeyType: HASH
-            - AttributeName: orgName
-              KeyType: RANGE
-          Projection:
-            ProjectionType: ALL
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
 
   # Setup Lambda Functions
 
