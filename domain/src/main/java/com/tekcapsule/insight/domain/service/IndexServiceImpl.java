@@ -28,7 +28,7 @@ public class IndexServiceImpl implements IndexService {
         IndexRecord indexRecord = IndexRecord.builder()
                 .stockIndex(createIndexRecordCommand.getStockIndex())
                 .topic(createIndexRecordCommand.getTopic())
-                .closingOn(createIndexRecordCommand.getClosingOn())
+                .publishedOn(createIndexRecordCommand.getPublishedOn())
                 .valueOnClosing(createIndexRecordCommand.getValueOnClosing())
                 .stocks(createIndexRecordCommand.getStocks())
                 .comment(createIndexRecordCommand.getComment())
@@ -48,7 +48,7 @@ public class IndexServiceImpl implements IndexService {
         if (indexRecord != null) {
             indexRecord.setStockIndex(updateIndexRecordCommand.getStockIndex());
             indexRecord.setTopic(updateIndexRecordCommand.getTopic());
-            indexRecord.setClosingOn(updateIndexRecordCommand.getClosingOn());
+            indexRecord.setPublishedOn(updateIndexRecordCommand.getPublishedOn());
             indexRecord.setValueOnClosing(updateIndexRecordCommand.getValueOnClosing());
             indexRecord.setStockIndex(updateIndexRecordCommand.getStockIndex());
             indexRecord.setComment(updateIndexRecordCommand.getComment());

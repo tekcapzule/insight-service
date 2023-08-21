@@ -26,8 +26,8 @@ public class IndexRecord extends BaseDomainEntity implements AggregateRoot {
     @DynamoDBAttribute(attributeName = "topic")
     @DynamoDBTypeConvertedEnum
     private Topic topic;
-    @DynamoDBAttribute(attributeName = "closingOn")
-    private String closingOn;
+    @DynamoDBAttribute(attributeName = "publishedOn")
+    private String publishedOn;
     @DynamoDBAttribute(attributeName = "valueOnClosing")
     private BigDecimal valueOnClosing;
     @DynamoDBAttribute(attributeName = "stocks")
