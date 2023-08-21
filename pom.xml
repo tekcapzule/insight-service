@@ -29,9 +29,9 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>course</id>
+            <id>insights</id>
             <name>GitHub TekCapsule Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/tekcapsule/course-service</url>
+            <url>https://maven.pkg.github.com/tekcapsule/insights-service</url>
         </repository>
     </distributionManagement>
 </project>

@@ -2,7 +2,8 @@ package com.tekcapsule.insight.domain.service;
 
 import com.tekcapsule.insight.domain.command.CreateCommand;
 import com.tekcapsule.insight.domain.command.UpdateCommand;
-import com.tekcapsule.insight.domain.model.Course;
+import com.tekcapsule.insight.domain.model.Insights;
+
 import java.util.List;
 
 
@@ -12,7 +13,7 @@ public interface InsightService {
 
     void update(UpdateCommand updateCommand);
 
-    List<Course> findAll();
+    List<Insights> findAll();
 
-    List<Course> findAllByTopicCode(String code);
+    List<Insights> findAllByTopicCode(String code);
 }

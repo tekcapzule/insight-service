@@ -1,11 +1,11 @@
-package com.tekcapsule.insight.application.function;
+package com.tekcapsule.insights.application.function;
 
 import com.tekcapsule.core.domain.EmptyFunctionInput;
 import com.tekcapsule.core.utils.HeaderUtil;
 import com.tekcapsule.core.utils.Outcome;
 import com.tekcapsule.core.utils.Stage;
-import com.tekcapsule.insight.application.config.AppConfig;
-import com.tekcapsule.insight.domain.model.Course;
+import com.tekcapsule.insights.application.config.AppConfig;
+import com.tekcapsule.insight.domain.model.Insights;
 import com.tekcapsule.insight.domain.service.InsightService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
@@ -17,7 +17,7 @@ import java.util.function.Function;
 
 @Component
 @Slf4j
-public class GetAllFunction implements Function<Message<EmptyFunctionInput>, Message<List<Course>>> {
+public class GetAllFunction implements Function<Message<EmptyFunctionInput>, Message<List<Insights>>> {
 
     private final InsightService insightService;
 
@@ -30,19 +30,19 @@ public class GetAllFunction implements Function<Message<EmptyFunctionInput>, Mes
 
 
     @Override
-    public Message<List<Course>> apply(Message<EmptyFunctionInput> getAllInputMessage) {
+    public Message<List<Insights>> apply(Message<EmptyFunctionInput> getAllInputMessage) {
 
         Map<String, Object> responseHeaders = new HashMap<>();
-        List<Course> courses = new ArrayList<>();
+        List<Insights> cours = new ArrayList<>();
         String stage = appConfig.getStage().toUpperCase();
         try {
             log.info("Entering get all courses Function");
-            courses = insightService.findAll();
+            cours = insightService.findAll();
             responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.SUCCESS);
         } catch (Exception ex) {
             log.error(ex.getMessage());
             responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.ERROR);
         }
-        return new GenericMessage<>(courses, responseHeaders);
+        return new GenericMessage<>(cours, responseHeaders);
     }
 }

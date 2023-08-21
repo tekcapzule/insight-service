@@ -1,8 +1,6 @@
-package com.tekcapsule.insight.application.function.input;
+package com.tekcapsule.insights.application.function.input;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tekcapsule.insight.domain.model.*;
-import com.tekcapsule.insight.domain.model.Module;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +9,7 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
-public class CreateInput {
+public class CreateStocksInput {
     private String title;
     private String topicCode;
     private String author;
