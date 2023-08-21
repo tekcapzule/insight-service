@@ -57,9 +57,13 @@ Resources:
       AttributeDefinitions:
         - AttributeName: insightId
           AttributeType: S
+        - AttributeName: publishedOn
+          AttributeType: S
       KeySchema:
         - AttributeName: insightId
           KeyType: HASH
+        - AttributeName: publishedOn
+          KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
