@@ -76,7 +76,7 @@ Resources:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "InsightsTable"
+            TableName:  !Ref InsightTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: createNewsFunction
@@ -97,7 +97,7 @@ Resources:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "InsightsTable"
+            TableName:  !Ref InsightTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: updateNewsFunction
@@ -118,7 +118,7 @@ Resources:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "InsightsTable"
+            TableName:  !Ref InsightTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: getAllNewsFunction
@@ -139,7 +139,7 @@ Resources:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "InsightsTable"
+            TableName: !Ref InsightTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: CreateIndexRecordFunction
@@ -160,7 +160,7 @@ Resources:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "InsightsTable"
+            TableName:  !Ref InsightTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: updateIndexRecordFunction
@@ -181,7 +181,7 @@ Resources:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "InsightsTable"
+            TableName:  !Ref InsightTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: getAllIndexRecordsFunction
@@ -199,5 +199,5 @@ Resources:
 
 Outputs:
   InsightApiEndpoint:
-    Description: "Insights API endpoint."
+    Description: "Insight API endpoint."
     Value: !Sub "https://${InsightApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/insight"
