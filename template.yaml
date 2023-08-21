@@ -57,8 +57,6 @@ Resources:
       AttributeDefinitions:
         - AttributeName: insightId
           AttributeType: S
-        - AttributeName: closingOn
-          AttributeType: S
       KeySchema:
         - AttributeName: insightId
           KeyType: HASH
