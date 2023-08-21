@@ -2,9 +2,9 @@ version = 0.1
 [dev]
 [dev.deploy]
 [dev.deploy.parameters]
-stack_name = "dev-insights-service"
+stack_name = "dev-insight-service"
 s3_bucket = "com.tekcapsule.api.deployment.dev"
-s3_prefix = "dev-insights-service"
+s3_prefix = "dev-insight-service"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
@@ -14,9 +14,9 @@ image_repositories = []
 [prod]
 [prod.deploy]
 [prod.deploy.parameters]
-stack_name = "prod-insights-service"
+stack_name = "prod-insight-service"
 s3_bucket = "com.tekcapsule.api.deployment.prod"
-s3_prefix = "prod-insights-service"
+s3_prefix = "prod-insight-service"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
