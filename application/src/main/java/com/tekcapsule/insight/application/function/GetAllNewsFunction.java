@@ -33,7 +33,7 @@ public class GetAllNewsFunction implements Function<Message<GetNewsInput>, Messa
 
 
     @Override
-    public Message<List<Insights>> apply(Message<GetNewsInput> getInputMessage) {
+    public Message<List<News>> apply(Message<GetNewsInput> getInputMessage) {
 
         Map<String, Object> responseHeaders = new HashMap<>();
         List<News> news = new ArrayList<>();
@@ -44,7 +44,7 @@ public class GetAllNewsFunction implements Function<Message<GetNewsInput>, Messa
             GetNewsInput getInput = getInputMessage.getPayload();
             log.info(String.format("Entering getall News Function -Start From:%s", getInput.getStartsFrom()));
             news = newsService.findAll(getInput.getStartsFrom());
-            if (cours.isEmpty()) {
+            if (news.isEmpty()) {
                 responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.NOT_FOUND);
             } else {
                 responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.SUCCESS);
@@ -53,6 +53,6 @@ public class GetAllNewsFunction implements Function<Message<GetNewsInput>, Messa
             log.error(ex.getMessage());
             responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.ERROR);
         }
-        return new GenericMessage<>(cours, responseHeaders);
+        return new GenericMessage<>(news, responseHeaders);
     }
 }

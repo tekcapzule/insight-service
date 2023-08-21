@@ -39,7 +39,7 @@ public final class InputOutputMapper {
         return createIndexRecordCommand;
     };
 
-    public static final BiFunction<UpdateIndexRecordInput, Origin, UpdateIndexRecordCommand> buildUpdateCreateIndexRecordCommandFromUpdateCreateIndexRecordInput = (updateInput, origin) -> {
+    public static final BiFunction<UpdateIndexRecordInput, Origin, UpdateIndexRecordCommand> buildUpdateIndexRecordCommandFromUpdateIndexRecordInput = (updateInput, origin) -> {
         UpdateIndexRecordCommand updateIndexRecordCommand = UpdateIndexRecordCommand.builder().build();
         BeanUtils.copyProperties(updateInput, updateIndexRecordCommand);
         addOrigin.apply(updateIndexRecordCommand, origin);
