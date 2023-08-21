@@ -9,6 +9,7 @@ import com.tekcapsule.insight.application.function.input.UpdateNewsInput;
 import com.tekcapsule.insight.application.mapper.InputOutputMapper;
 import com.tekcapsule.insight.application.config.AppConfig;
 import com.tekcapsule.insight.domain.command.UpdateNewsCommand;
+import com.tekcapsule.insight.domain.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
@@ -22,12 +23,12 @@ import java.util.function.Function;
 @Slf4j
 public class UpdateNewsFunction implements Function<Message<UpdateNewsInput>, Message<Void>> {
 
-    private final InsightService insightService;
+    private final NewsService newsService;
 
     private final AppConfig appConfig;
 
-    public UpdateNewsFunction(final InsightService insightService, final AppConfig appConfig) {
-        this.insightService = insightService;
+    public UpdateNewsFunction(final NewsService newsService, final AppConfig appConfig) {
+        this.newsService = newsService;
         this.appConfig = appConfig;
     }
 
@@ -40,10 +41,10 @@ public class UpdateNewsFunction implements Function<Message<UpdateNewsInput>, Me
 
         try {
             UpdateNewsInput updateInput = updateInputMessage.getPayload();
-            log.info(String.format("Entering update course Function - Module Code:%s", updateInput.getTopicCode()));
+            log.info(String.format("Entering update news Function - Insight Id:%s", updateInput.getInsightId()));
             Origin origin = HeaderUtil.buildOriginFromHeaders(updateInputMessage.getHeaders());
-            UpdateNewsCommand updateNewsCommand = InputOutputMapper.buildUpdateCommandFromUpdateInput.apply(updateInput, origin);
-            insightService.update(updateNewsCommand);
+            UpdateNewsCommand updateNewsCommand = InputOutputMapper.buildUpdateNewsCommandFromUpdateNewsInput.apply(updateInput, origin);
+            newsService.update(updateNewsCommand);
             responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.SUCCESS);
             payload = PayloadUtil.composePayload(Outcome.SUCCESS);
         } catch (Exception ex) {

@@ -1,6 +1,5 @@
 package com.tekcapsule.insight.domain.service;
 
-import com.sun.tools.javac.util.List;
 import com.tekcapsule.insight.domain.command.CreateNewsCommand;
 import com.tekcapsule.insight.domain.command.UpdateNewsCommand;
 import com.tekcapsule.insight.domain.model.News;
@@ -9,6 +8,8 @@ import com.tekcapsule.insight.domain.repository.NewsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -57,11 +58,11 @@ public class NewsServiceImpl implements NewsService {
         }
     }
     @Override
-    public List<News> findAll() {
+    public List<News> findAll(String startsFrom) {
 
         log.info("Entering findAll news service");
 
-        return newsRepository.findAll();
+        return newsRepository.findAll(startsFrom);
     }
 
 }

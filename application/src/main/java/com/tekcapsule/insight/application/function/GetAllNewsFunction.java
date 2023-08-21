@@ -5,6 +5,8 @@ import com.tekcapsule.core.utils.Outcome;
 import com.tekcapsule.core.utils.Stage;
 import com.tekcapsule.insight.application.config.AppConfig;
 import com.tekcapsule.insight.application.function.input.GetNewsInput;
+import com.tekcapsule.insight.domain.model.News;
+import com.tekcapsule.insight.domain.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
@@ -18,14 +20,14 @@ import java.util.function.Function;
 
 @Component
 @Slf4j
-public class GetAllNewsFunction implements Function<Message<GetNewsInput>, Message<List<Insights>>> {
+public class GetAllNewsFunction implements Function<Message<GetNewsInput>, Message<List<News>>> {
 
-    private final InsightService insightService;
+    private final NewsService newsService;
 
     private final AppConfig appConfig;
 
-    public GetAllNewsFunction(final InsightService insightService, final AppConfig appConfig) {
-        this.insightService = insightService;
+    public GetAllNewsFunction(final NewsService newsService, final AppConfig appConfig) {
+        this.newsService = newsService;
         this.appConfig = appConfig;
     }
 
@@ -34,14 +36,14 @@ public class GetAllNewsFunction implements Function<Message<GetNewsInput>, Messa
     public Message<List<Insights>> apply(Message<GetNewsInput> getInputMessage) {
 
         Map<String, Object> responseHeaders = new HashMap<>();
-        List<Insights> cours = new ArrayList<>();
+        List<News> news = new ArrayList<>();
 
         String stage = appConfig.getStage().toUpperCase();
 
         try {
             GetNewsInput getInput = getInputMessage.getPayload();
-            log.info(String.format("Entering get course Function -Module Code:%s", getInput.getInsightsId()));
-            cours = insightService.findAllByTopicCode(getInput.getInsightsId());
+            log.info(String.format("Entering getall News Function -Start From:%s", getInput.getStartsFrom()));
+            news = newsService.findAll(getInput.getStartsFrom());
             if (cours.isEmpty()) {
                 responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.NOT_FOUND);
             } else {

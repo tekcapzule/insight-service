@@ -1,6 +1,5 @@
 package com.tekcapsule.insight.domain.service;
 
-import com.sun.tools.javac.util.List;
 import com.tekcapsule.insight.domain.command.CreateIndexRecordCommand;
 import com.tekcapsule.insight.domain.command.UpdateIndexRecordCommand;
 import com.tekcapsule.insight.domain.model.IndexRecord;
@@ -8,6 +7,8 @@ import com.tekcapsule.insight.domain.repository.IndexRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -43,7 +44,7 @@ public class IndexServiceImpl implements IndexService {
 
         log.info(String.format("Entering update index service - Insight ID:%s", updateIndexRecordCommand.getInsightId()));
 
-        IndexRecord indexRecord = IndexRepository.findBy(updateIndexRecordCommand.getInsightId());
+        IndexRecord indexRecord = indexRepository.findBy(updateIndexRecordCommand.getInsightId());
         if (indexRecord != null) {
             indexRecord.setStockIndex(updateIndexRecordCommand.getStockIndex());
             indexRecord.setTopic(updateIndexRecordCommand.getTopic());
@@ -58,11 +59,11 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public List<IndexRecord> findAll() {
+    public List<IndexRecord> findAll(String startsFrom) {
 
         log.info("Entering findAll index service");
 
-        return IndexRepository.findAll();
+        return indexRepository.findAll(startsFrom);
     }
 
 

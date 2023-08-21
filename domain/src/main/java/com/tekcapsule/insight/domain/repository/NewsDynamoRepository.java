@@ -2,6 +2,7 @@ package com.tekcapsule.insight.domain.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.tekcapsule.insight.domain.model.News;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class NewsDynamoRepository implements NewsRepository{
     }
 
     @Override
-    public List<News> findAll() {
+    public List<News> findAll(String startsFrom) {
 
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
@@ -43,6 +44,11 @@ public class NewsDynamoRepository implements NewsRepository{
     @Override
     public News findBy(String code) {
         return dynamo.load(News.class, code);
+    }
+
+    @Override
+    public List<News> findAll() {
+        return dynamo.scan(News.class,new DynamoDBScanExpression());
     }
 
     @Override

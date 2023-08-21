@@ -9,6 +9,7 @@ import com.tekcapsule.insight.application.config.AppConfig;
 import com.tekcapsule.insight.application.function.input.CreateNewsInput;
 import com.tekcapsule.insight.application.mapper.InputOutputMapper;
 import com.tekcapsule.insight.domain.command.CreateNewsCommand;
+import com.tekcapsule.insight.domain.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
@@ -22,12 +23,12 @@ import java.util.function.Function;
 @Slf4j
 public class CreateNewsFunction implements Function<Message<CreateNewsInput>, Message<Void>> {
 
-    private final InsightService insightService;
+    private final NewsService newsService;
 
     private final AppConfig appConfig;
 
-    public CreateNewsFunction(final InsightService insightService, final AppConfig appConfig) {
-        this.insightService = insightService;
+    public CreateNewsFunction(final NewsService newsService, final AppConfig appConfig) {
+        this.newsService = newsService;
         this.appConfig = appConfig;
     }
 
@@ -40,10 +41,10 @@ public class CreateNewsFunction implements Function<Message<CreateNewsInput>, Me
 
         try {
             CreateNewsInput createInput = createInputMessage.getPayload();
-            log.info(String.format("Entering create course Function - Module Code:%s", createInput.getTopicCode()));
+            log.info(String.format("Entering create news Function - News title:%s", createInput.getTitle()));
             Origin origin = HeaderUtil.buildOriginFromHeaders(createInputMessage.getHeaders());
-            CreateNewsCommand createNewsCommand = InputOutputMapper.buildCreateCommandFromCreateInput.apply(createInput, origin);
-            insightService.create(createNewsCommand);
+            CreateNewsCommand createNewsCommand = InputOutputMapper.buildCreateNewsCommandFromCreateNewsInput.apply(createInput, origin);
+            newsService.create(createNewsCommand);
             responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.SUCCESS);
             payload = PayloadUtil.composePayload(Outcome.SUCCESS);
         } catch (Exception ex) {
