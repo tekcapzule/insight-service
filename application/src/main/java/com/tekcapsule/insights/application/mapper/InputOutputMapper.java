@@ -1,10 +1,10 @@
-package com.tekcapsule.insight.application.mapper;
+package com.tekcapsule.insights.application.mapper;
 
 import com.tekcapsule.core.domain.Command;
 import com.tekcapsule.core.domain.ExecBy;
 import com.tekcapsule.core.domain.Origin;
-import com.tekcapsule.insight.application.function.input.UpdateInput;
-import com.tekcapsule.insight.application.function.input.CreateInput;
+import com.tekcapsule.insights.application.function.input.UpdateNewsInput;
+import com.tekcapsule.insights.application.function.input.CreateNewsInput;
 import com.tekcapsule.insight.domain.command.CreateCommand;
 import com.tekcapsule.insight.domain.command.UpdateCommand;
 import lombok.extern.slf4j.Slf4j;
@@ -28,14 +28,14 @@ public final class InputOutputMapper {
         return command;
     };
 
-    public static final BiFunction<CreateInput, Origin, CreateCommand> buildCreateCommandFromCreateInput = (createInput, origin) -> {
+    public static final BiFunction<CreateNewsInput, Origin, CreateCommand> buildCreateCommandFromCreateInput = (createInput, origin) -> {
         CreateCommand createCommand =  CreateCommand.builder().build();
         BeanUtils.copyProperties(createInput, createCommand);
         addOrigin.apply(createCommand, origin);
         return createCommand;
     };
 
-    public static final BiFunction<UpdateInput, Origin, UpdateCommand> buildUpdateCommandFromUpdateInput = (updateInput, origin) -> {
+    public static final BiFunction<UpdateNewsInput, Origin, UpdateCommand> buildUpdateCommandFromUpdateInput = (updateInput, origin) -> {
         UpdateCommand updateCommand = UpdateCommand.builder().build();
         BeanUtils.copyProperties(updateInput, updateCommand);
         addOrigin.apply(updateCommand, origin);

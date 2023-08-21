@@ -27,14 +27,28 @@ Globals:
         TABLE: !Ref CourseTable
         APPLICATION_ENVIRONMENT: !Ref Stage
         CLOUD_REGION: us-east-1
-        MAIN_CLASS: com.tekcapsule.course.application.CourseApplication
+        MAIN_CLASS: com.tekcapsule.insights.application.InsightsApplication
         JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
 
 Resources:
 
   # Setup API Gateway
 
-  CourseApi:
+  NewsApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub "course-${Stage}"
+      StageName: !Ref Stage
+      Cors:
+        AllowMethods: "'POST, GET'"
+        AllowHeaders: "'X-Forwarded-For, Content-Type, Authorization, X-User-Login, X-Channel-Code'"
+        AllowOrigin: "'*'"
+        MaxAge: "'600'"
+        AllowCredentials: false
+      Variables:
+        LAMBDA_ALIAS: !Ref Stage
+
+  StocksApi:
     Type: AWS::Serverless::Api
     Properties:
       Name: !Sub "course-${Stage}"
@@ -50,29 +64,41 @@ Resources:
 
   # Setup DynamoDB Table
 
-  CourseTable:
+  InsightsTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: !Sub "${Stage}Course"
+      TableName: !Sub "${Stage}Insights"
       AttributeDefinitions:
-        - AttributeName: courseId
+        - AttributeName: insightsId
           AttributeType: S
-        - AttributeName: topicCode
+        - AttributeName: region
           AttributeType: S
-        - AttributeName: status
+        - AttributeName: type
           AttributeType: S
       KeySchema:
-        - AttributeName: courseId
+        - AttributeName: insightsId
           KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
       GlobalSecondaryIndexes:
-        - IndexName: topicGSI
+        - IndexName: newsGSI
           KeySchema:
-            - AttributeName: status
+            - AttributeName: type
               KeyType: HASH
-            - AttributeName: topicCode
+            - AttributeName: title
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+
+        - IndexName: stocksGSI
+          KeySchema:
+            - AttributeName: region
+              KeyType: HASH
+            - AttributeName: orgName
               KeyType: RANGE
           Projection:
             ProjectionType: ALL
@@ -82,93 +108,140 @@ Resources:
 
   # Setup Lambda Functions
 
-  CreateCourseFunction:
+  CreateNewsFeedsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Course-CreateCourse"
+      FunctionName: !Sub "${Stage}-Course-CreateNews"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CourseTable
+            TableName: "InsightsTable"
       Environment:
         Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: createFunction
+          SPRING_CLOUD_FUNCTION_DEFINITION: createNewsFunction
       Events:
         ApiEvent:
           Type: Api
           Properties:
-            Path: course/create
+            Path: news/create
             Method: post
             RestApiId:
-              Ref: CourseApi
+              Ref: NewsApi
 
-  UpdateCourseFunction:
+  UpdateNewsFeedsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Course-UpdateCourse"
+      FunctionName: !Sub "${Stage}-Course-UpdateNews"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CourseTable
+            TableName: "InsightsTable"
       Environment:
         Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: updateFunction
+          SPRING_CLOUD_FUNCTION_DEFINITION: updateNewsFunction
       Events:
         ApiEvent:
           Type: Api
           Properties:
-            Path: course/update
+            Path: news/update
             Method: post
             RestApiId:
-              Ref: CourseApi
+              Ref: NewsApi
 
-  GetCourseFunction:
+  GetNewsFeedsByTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Course-GetCourse"
+      FunctionName: !Sub "${Stage}-Course-GetNewsByType"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CourseTable
+            TableName: "InsightsTable"
       Environment:
         Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: getFunction
+          SPRING_CLOUD_FUNCTION_DEFINITION: getNewsFeedsFunction
       Events:
         ApiEvent:
           Type: Api
           Properties:
-            Path: course/get
+            Path: news/get
             Method: post
             RestApiId:
-              Ref: CourseApi
+              Ref: NewsApi
 
-  GetAllCoursesFunction:
+  CreateStocksFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Course-GetAllCourses"
+      FunctionName: !Sub "${Stage}-Course-CreateStocks"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CourseTable
+            TableName: "InsightsTable"
       Environment:
         Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: getAllFunction
+          SPRING_CLOUD_FUNCTION_DEFINITION: createStockFunction
       Events:
         ApiEvent:
           Type: Api
           Properties:
-            Path: course/getAll
+            Path: stocks/create
             Method: post
             RestApiId:
-              Ref: CourseApi
+              Ref: StocksApi
+
+  UpdateStocksFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${Stage}-Course-UpdateStocks"
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "InsightsTable"
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: updateStockFunction
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: stocks/update
+            Method: post
+            RestApiId:
+              Ref: StocksApi
+
+  GetStocksByRegionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${Stage}-Course-GetStocksByRegion"
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "InsightsTable"
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: getStocksFunction
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: stocks/get
+            Method: post
+            RestApiId:
+              Ref: StocksApi
+
 
   # Set Output Variable
 
 Outputs:
-  ApiEndpoint:
-    Description: "Course API endpoint."
-    Value: !Sub "https://${CourseApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/course"
+  StocksApiEndpoint:
+    Description: "Stocks API endpoint."
+    Value: !Sub "https://${StocksApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/stocks"
+
+  NewsApiEndpoint:
+    Description: "News API endpoint."
+    Value: !Sub "https://${NewsApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/news"

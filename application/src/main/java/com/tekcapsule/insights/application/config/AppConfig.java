@@ -1,4 +1,4 @@
-package com.tekcapsule.insight.application.config;
+package com.tekcapsule.insights.application.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

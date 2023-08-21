@@ -1,4 +1,4 @@
-package com.tekcapsule.insight.application.function.input;
+package com.tekcapsule.insights.application.function.input;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
-public class GetInput {
-    private String topicCode;
+public class GetStocksInput {
+    private String region;
 }

@@ -2,8 +2,7 @@ package com.tekcapsule.insight.domain.service;
 
 import com.tekcapsule.insight.domain.command.CreateCommand;
 import com.tekcapsule.insight.domain.command.UpdateCommand;
-import com.tekcapsule.insight.domain.model.Course;
-import com.tekcapsule.insight.domain.model.Status;
+import com.tekcapsule.insight.domain.model.Insights;
 import com.tekcapsule.insight.domain.repository.InsightRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class InsightServiceImpl implements InsightService {
 
         log.info(String.format("Entering create course service - Module Code :%s", createCommand.getTopicCode()));
 
-        Course course = Course.builder()
+        Insights insights = Insights.builder()
                 .title(createCommand.getTitle())
                 .topicCode(createCommand.getTopicCode())
                 .author(createCommand.getAuthor())
@@ -43,10 +42,10 @@ public class InsightServiceImpl implements InsightService {
                 .status(Status.ACTIVE)
                 .build();
 
-        course.setAddedOn(createCommand.getExecOn());
-        course.setAddedBy(createCommand.getExecBy().getUserId());
+        insights.setAddedOn(createCommand.getExecOn());
+        insights.setAddedBy(createCommand.getExecBy().getUserId());
 
-        insightRepository.save(course);
+        insightRepository.save(insights);
     }
 
     @Override
@@ -54,25 +53,25 @@ public class InsightServiceImpl implements InsightService {
 
         log.info(String.format("Entering update course service - Course ID:%s", updateCommand.getCourseId()));
 
-        Course course = insightRepository.findBy(updateCommand.getCourseId());
-        if (course != null) {
-            course.setTitle(updateCommand.getTitle());
-            course.setTopicCode(updateCommand.getTopicCode());
-            course.setAuthor(updateCommand.getAuthor());
-            course.setPublisher(updateCommand.getPublisher());
-            course.setDuration(updateCommand.getDuration());
-            course.setCourseUrl(updateCommand.getCourseUrl());
-            course.setSummary(updateCommand.getSummary());
-            course.setDescription(updateCommand.getDescription());
-            course.setModules(updateCommand.getModules());
-            course.setPrizingModel(updateCommand.getPrizingModel());
-            course.setDeliveryMode(updateCommand.getDeliveryMode());
-            course.setLearningMode(updateCommand.getLearningMode());
-            course.setPromotion(updateCommand.getPromotion());
-            course.setImageUrl(updateCommand.getImageUrl());
-            course.setUpdatedOn(updateCommand.getExecOn());
-            course.setUpdatedBy(updateCommand.getExecBy().getUserId());
-            insightRepository.save(course);
+        Insights insights = insightRepository.findBy(updateCommand.getCourseId());
+        if (insights != null) {
+            insights.setTitle(updateCommand.getTitle());
+            insights.setTopicCode(updateCommand.getTopicCode());
+            insights.setAuthor(updateCommand.getAuthor());
+            insights.setPublisher(updateCommand.getPublisher());
+            insights.setDuration(updateCommand.getDuration());
+            insights.setCourseUrl(updateCommand.getCourseUrl());
+            insights.setSummary(updateCommand.getSummary());
+            insights.setDescription(updateCommand.getDescription());
+            insights.setModules(updateCommand.getModules());
+            insights.setPrizingModel(updateCommand.getPrizingModel());
+            insights.setDeliveryMode(updateCommand.getDeliveryMode());
+            insights.setLearningMode(updateCommand.getLearningMode());
+            insights.setPromotion(updateCommand.getPromotion());
+            insights.setImageUrl(updateCommand.getImageUrl());
+            insights.setUpdatedOn(updateCommand.getExecOn());
+            insights.setUpdatedBy(updateCommand.getExecBy().getUserId());
+            insightRepository.save(insights);
         }
     }
 
@@ -92,7 +91,7 @@ public class InsightServiceImpl implements InsightService {
     }*/
 
     @Override
-    public List<Course> findAll() {
+    public List<Insights> findAll() {
 
         log.info("Entering findAll Course service");
 
@@ -100,7 +99,7 @@ public class InsightServiceImpl implements InsightService {
     }
 
     @Override
-    public List<Course> findAllByTopicCode(String topicCode) {
+    public List<Insights> findAllByTopicCode(String topicCode) {
 
         log.info(String.format("Entering findAllByTopicCode Course service - Module code:%s", topicCode));
 

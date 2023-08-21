@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.tekcapsule.insight.domain.model.Course;
+import com.tekcapsule.insight.domain.model.Insights;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,13 +25,13 @@ public class InsightDynamoDbRepositoryImpl implements InsightRepository {
     }
 
     @Override
-    public List<Course> findAll() {
+    public List<Insights> findAll() {
 
-        return dynamo.scan(Course.class,new DynamoDBScanExpression());
+        return dynamo.scan(Insights.class,new DynamoDBScanExpression());
     }
 
     @Override
-    public List<Course> findAllByTopicCode(String topicCode) {
+    public List<Insights> findAllByTopicCode(String topicCode) {
 
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
@@ -42,24 +42,24 @@ public class InsightDynamoDbRepositoryImpl implements InsightRepository {
         expNames.put("#topicCode", "topicCode");
 
 
-        DynamoDBQueryExpression<Course> queryExpression = new DynamoDBQueryExpression<Course>()
+        DynamoDBQueryExpression<Insights> queryExpression = new DynamoDBQueryExpression<Insights>()
                 .withIndexName("topicGSI").withConsistentRead(false)
                 .withKeyConditionExpression("#status = :status and #topicCode = :topicCode")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
 
-        return dynamo.query(Course.class, queryExpression);
+        return dynamo.query(Insights.class, queryExpression);
 
     }
 
     @Override
-    public Course findBy(String code) {
-        return dynamo.load(Course.class, code);
+    public Insights findBy(String code) {
+        return dynamo.load(Insights.class, code);
     }
 
     @Override
-    public Course save(Course course) {
-        dynamo.save(course);
-        return course;
+    public Insights save(Insights insights) {
+        dynamo.save(insights);
+        return insights;
     }
 }

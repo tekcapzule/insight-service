@@ -3,7 +3,6 @@ package com.tekcapsule.insight.domain.command;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tekcapsule.core.domain.Command;
 import com.tekcapsule.insight.domain.model.*;
-import com.tekcapsule.insight.domain.model.Module;
 import lombok.Builder;
 import lombok.Data;
 
