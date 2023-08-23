@@ -55,18 +55,33 @@ Resources:
     Properties:
       TableName: !Sub "${Stage}Insight"
       AttributeDefinitions:
+        - AttributeName: insightId
+          AttributeType: S
         - AttributeName: topic
           AttributeType: S
         - AttributeName: publishedOn
           AttributeType: S
       KeySchema:
-        - AttributeName: topic
+        - AttributeName: insightId
           KeyType: HASH
         - AttributeName: publishedOn
           KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
+
+      GlobalSecondaryIndexes:
+        - IndexName: insightGSI
+          KeySchema:
+            - AttributeName: topic
+              KeyType: HASH
+            - AttributeName: publishedOn
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
 
   # Setup Lambda Functions
 

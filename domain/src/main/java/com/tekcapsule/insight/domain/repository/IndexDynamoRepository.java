@@ -35,6 +35,7 @@ public class IndexDynamoRepository implements IndexRepository {
         expNames.put("#topic", "topic");
 
         DynamoDBQueryExpression<IndexRecord> queryExpression = new DynamoDBQueryExpression<IndexRecord>()
+                .withIndexName("insightGSI")
                 .withConsistentRead(false)
                 .withKeyConditionExpression("#topic = :topic and #publishedOn >= :startsFrom")
                 .withExpressionAttributeValues(expAttributes)
