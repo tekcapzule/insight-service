@@ -55,7 +55,7 @@ Resources:
     Properties:
       TableName: !Sub "${Stage}Insight"
       AttributeDefinitions:
-        - AttributeName: insightId
+        - AttributeName: topic
           AttributeType: S
         - AttributeName: publishedOn
           AttributeType: S
