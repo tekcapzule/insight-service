@@ -35,6 +35,7 @@ public class NewsDynamoRepository implements NewsRepository{
         expNames.put("#topic", "topic");
 
         DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()
+                .withIndexName("insightGSI")
                 .withConsistentRead(false)
                 .withKeyConditionExpression("#topic = :topic and #publishedOn >= :startsFrom")
                 .withExpressionAttributeValues(expAttributes)
