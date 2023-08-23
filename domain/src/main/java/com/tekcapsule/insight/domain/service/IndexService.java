@@ -9,5 +9,5 @@ public interface IndexService {
 
     void create(CreateIndexRecordCommand createIndexRecordCommand);
     void update(UpdateIndexRecordCommand updateIndexRecordCommand);
-    List<IndexRecord> findAll(String startsFrom);
+    List<IndexRecord> findAll(String startsFrom, String topic);
 }

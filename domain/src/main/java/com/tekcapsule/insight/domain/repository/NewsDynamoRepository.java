@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,17 +25,19 @@ public class NewsDynamoRepository implements NewsRepository{
     }
 
     @Override
-    public List<News> findAll(String startsFrom) {
+    public List<News> findAll(String startsFrom, String topic) {
 
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
-        expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
+        expAttributes.put(":startsFrom", new AttributeValue().withS(startsFrom));
+        expAttributes.put(":topic", new AttributeValue().withS(topic));
 
         HashMap<String, String> expNames = new HashMap<>();
-        expNames.put("#status", "status");
+        expNames.put("#publishedOn", "publishedOn");
+        expNames.put("#topic", "topic");
 
         DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()
-                .withIndexName("topicGSI").withConsistentRead(false)
-                .withKeyConditionExpression("#status = :status and #topicCode = :topicCode")
+                .withConsistentRead(false)
+                .withKeyConditionExpression("#topic = :topic and #publishedOn >= :startsFrom")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
 

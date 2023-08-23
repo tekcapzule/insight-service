@@ -6,5 +6,5 @@ import com.tekcapsule.insight.domain.model.IndexRecord;
 import java.util.List;
 
 public interface IndexRepository extends CrudRepository<IndexRecord, String> {
-    List<IndexRecord> findAll (String startsFrom);
+    List<IndexRecord> findAll (String startsFrom, String topic);
 }

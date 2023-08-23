@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 public class GetIndexRecordsInput {
+    private String topic;
     private String startsFrom;
 }

@@ -10,5 +10,5 @@ public interface NewsService {
 
     void create(CreateNewsCommand createNewsCommand);
     void update(UpdateNewsCommand updateNewsCommand);
-    List<News> findAll(String startsFrom);
+    List<News> findAll(String startsFrom, String topic);
 }

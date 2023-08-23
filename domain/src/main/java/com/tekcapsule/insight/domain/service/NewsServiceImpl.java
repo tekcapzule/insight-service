@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Slf4j
@@ -58,11 +59,11 @@ public class NewsServiceImpl implements NewsService {
         }
     }
     @Override
-    public List<News> findAll(String startsFrom) {
+    public List<News> findAll(String startsFrom, String topic) {
 
-        log.info("Entering findAll news service");
+        log.info("Entering findAll news service- topic code :%s",topic);
 
-        return newsRepository.findAll(startsFrom);
+        return newsRepository.findAll(startsFrom, topic);
     }
 
 }

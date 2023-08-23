@@ -5,10 +5,12 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.tekcapsule.insight.domain.model.IndexRecord;
+import com.tekcapsule.insight.domain.model.News;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,16 +26,18 @@ public class IndexDynamoRepository implements IndexRepository {
     }
 
     @Override
-    public List<IndexRecord> findAll(String startsFrom) {
+    public List<IndexRecord> findAll(String startsFrom, String topic) {
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
-        expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
+        expAttributes.put(":startsFrom", new AttributeValue().withS(Instant.parse(startsFrom).toString()));
+        expAttributes.put(":topic", new AttributeValue().withS(topic));
 
         HashMap<String, String> expNames = new HashMap<>();
-        expNames.put("#status", "status");
+        expNames.put("#publishedOn", "publishedOn");
+        expNames.put("#topic", "topic");
 
         DynamoDBQueryExpression<IndexRecord> queryExpression = new DynamoDBQueryExpression<IndexRecord>()
-                .withIndexName("topicGSI").withConsistentRead(false)
-                .withKeyConditionExpression("#status = :status and #topicCode = :topicCode")
+                .withConsistentRead(false)
+                .withKeyConditionExpression("#topic = :topic and #publishedOn >= :startsFrom")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
 
