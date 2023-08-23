@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class IndexDynamoRepository implements IndexRepository {
     @Override
     public List<IndexRecord> findAll(String startsFrom, String topic) {
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
-        expAttributes.put(":startsFrom", new AttributeValue().withS(Instant.parse(startsFrom).toString()));
+        expAttributes.put(":startsFrom", new AttributeValue().withS(startsFrom));
         expAttributes.put(":topic", new AttributeValue().withS(topic));
 
         HashMap<String, String> expNames = new HashMap<>();
