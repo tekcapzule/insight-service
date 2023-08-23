@@ -43,7 +43,7 @@ public class GetAllNewsFunction implements Function<Message<GetNewsInput>, Messa
         try {
             GetNewsInput getInput = getInputMessage.getPayload();
             log.info(String.format("Entering getall News Function -Start From:%s", getInput.getStartsFrom()));
-            news = newsService.findAll(getInput.getStartsFrom());
+            news = newsService.findAll(getInput.getStartsFrom(), getInput.getTopic());
             if (news.isEmpty()) {
                 responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.NOT_FOUND);
             } else {

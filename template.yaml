@@ -60,7 +60,7 @@ Resources:
         - AttributeName: publishedOn
           AttributeType: S
       KeySchema:
-        - AttributeName: insightId
+        - AttributeName: topic
           KeyType: HASH
         - AttributeName: publishedOn
           KeyType: RANGE

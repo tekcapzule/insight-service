@@ -37,7 +37,7 @@ public class GetAllIndexRecordsFunction implements Function<Message<GetIndexReco
         String stage = appConfig.getStage().toUpperCase();
         try {
             log.info("Entering get all index Function");
-            indexRecords = indexService.findAll(getIndexRecordsInput.getStartsFrom());
+            indexRecords = indexService.findAll(getIndexRecordsInput.getStartsFrom(), getIndexRecordsInput.getTopic());
             responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.SUCCESS);
         } catch (Exception ex) {
             log.error(ex.getMessage());

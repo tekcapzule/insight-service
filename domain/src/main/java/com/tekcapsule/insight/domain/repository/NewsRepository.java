@@ -6,6 +6,6 @@ import com.tekcapsule.insight.domain.model.News;
 import java.util.List;
 
 public interface NewsRepository extends CrudRepository<News, String> {
-    List<News> findAll (String startsFrom);
+    List<News> findAll (String startsFrom, String topic);
 
 }

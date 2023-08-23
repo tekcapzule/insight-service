@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Slf4j
@@ -59,11 +60,11 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public List<IndexRecord> findAll(String startsFrom) {
+    public List<IndexRecord> findAll(String startsFrom, String topic) {
 
         log.info("Entering findAll index service");
 
-        return indexRepository.findAll(startsFrom);
+        return indexRepository.findAll(startsFrom,topic);
     }
 
 
