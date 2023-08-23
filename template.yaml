@@ -159,7 +159,7 @@ Resources:
             TableName: !Ref InsightTable
       Environment:
         Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: CreateIndexRecordFunction
+          SPRING_CLOUD_FUNCTION_DEFINITION: createIndexRecordFunction
       Events:
         ApiEvent:
           Type: Api
