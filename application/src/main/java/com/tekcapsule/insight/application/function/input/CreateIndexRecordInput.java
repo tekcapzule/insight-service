@@ -16,7 +16,7 @@ import java.util.List;
 public class CreateIndexRecordInput {
     private StockIndex stockIndex;
     private Topic topic;
-    private String closingOn;
+    private String publishedOn;
     private BigDecimal valueOnClosing;
     private List<Stock> stocks;
     private String comment;
