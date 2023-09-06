@@ -28,7 +28,6 @@ public class IndexRecord extends BaseDomainEntity implements AggregateRoot {
     @DynamoDBTypeConvertedEnum
     private Topic topic;
     @DynamoDBAttribute(attributeName = "publishedOn")
-    @DynamoDBRangeKey
     private String publishedOn;
     @DynamoDBAttribute(attributeName = "valueOnClosing")
     private BigDecimal valueOnClosing;
