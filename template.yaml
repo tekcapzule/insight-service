@@ -27,7 +27,7 @@ Globals:
         TABLE: !Ref InsightTable
         APPLICATION_ENVIRONMENT: !Ref Stage
         CLOUD_REGION: us-east-1
-        MAIN_CLASS: com.tekcapsule.insight.application.InsightApplication
+        MAIN_CLASS: com.tekcapzule.insight.application.InsightApplication
         JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
 
 Resources:
