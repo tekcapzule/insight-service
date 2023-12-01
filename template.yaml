@@ -208,6 +208,30 @@ Resources:
             Method: post
             RestApiId:
               Ref: InsightApi
+  LoadTickerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${Stage}-Insight-LoadTickerFunction"
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:  !Ref InsightTable
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: loadTickerFunction
+          REAL_STONKS_STOCK_SERVICE_API_URL: "https://realstonks.p.rapidapi.com/%s"
+          REAL_STONKS_STOCK_SERVICE_API_HOST: "realstonks.p.rapidapi.com"
+          REAL_STONKS_STOCK_SERVICE_API_KEY:
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: insight/loadTickerFunction
+            Method: post
+            RestApiId:
+              Ref: InsightApi
+
 
 
   # Set Output Variable

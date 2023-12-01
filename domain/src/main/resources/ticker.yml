@@ -1,0 +1,61 @@
+tickers:
+  AI:
+    - symbol: NVDA
+      name: Nvidia
+      weightage: 10
+    - symbol: AMD
+      name: AMD
+      weightage: 10
+    - symbol: LRCX
+      name: LRCX
+      weightage: 10
+    - symbol: GOOG
+      name: GOOGLE
+      weightage: 10
+    - symbol: AAPL
+      name: APPLE
+      weightage: 10
+    - symbol: GME
+      name: GME
+      weightage: 10
+    - symbol: MSFT
+      name: Microsoft
+      weightage: 10
+    - symbol: AMZN
+      name: Amazon
+      weightage: 10
+  WEB3:
+    - symbol: AAPL
+      name: APPLE
+      weightage: 10
+    - symbol: COIN
+      name: Coin
+      weightage: 10
+    - symbol: NVDA
+      name: Nvidia
+      weightage: 10
+    - symbol: U
+      name: U
+      weightage: 10
+  META:
+    - symbol: META
+      name: Meta
+      weightage: 10
+    - symbol: MSFT
+      name: Microsoft
+      weightage: 10
+    - symbol: RBLX
+      name: Rblx
+      weightage: 10
+    - symbol: MTCH
+      name: Mtch
+      weightage: 10
+    - symbol: TTWO
+      name: Ttwo
+      weightage: 10
+    - symbol: NVDA
+      name: Nvidia
+      weightage: 10
+    - symbol: MSFT
+      name: Microsoft
+      weightage: 10
