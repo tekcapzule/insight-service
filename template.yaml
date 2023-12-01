@@ -222,7 +222,7 @@ Resources:
           SPRING_CLOUD_FUNCTION_DEFINITION: loadTickerFunction
           REAL_STONKS_STOCK_SERVICE_API_URL: "https://realstonks.p.rapidapi.com/%s"
           REAL_STONKS_STOCK_SERVICE_API_HOST: "realstonks.p.rapidapi.com"
-          REAL_STONKS_STOCK_SERVICE_API_KEY: 328ffa4304msh747befc2378a64ap18b38ajsn001261a959e9
+          REAL_STONKS_STOCK_SERVICE_API_KEY:
       Events:
         ApiEvent:
           Type: Api
