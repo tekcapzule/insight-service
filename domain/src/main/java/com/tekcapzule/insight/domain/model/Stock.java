@@ -1,6 +1,7 @@
 package com.tekcapzule.insight.domain.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -16,4 +17,5 @@ public class Stock {
     private String symbol;
     private String companyName;
     private BigDecimal valueOnClosing;
+    private String lastUpdated;
 }
